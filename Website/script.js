@@ -4,12 +4,29 @@ let currentMode = 'random'; // Can be 'random', 'page', or 'surah'
 
 function canonicalize(text) {
     if (!text) return "";
+    
+    // 1. Remove all Tashkeel (vowels), small signs, and decorative marks
     let t = text.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g, '');
-    t = t.trim().replace(/^(سورة|سورت|س)\s*/, '');
-    const mapping = { 'أ': 'ا', 'إ': 'ا', 'آ': 'ا', 'ى': 'ي', 'ئ': 'ي', 'ؤ': 'و', 'ة': 'ه' };
+
+    // 2. Remove the word "سورة" (Surah) wherever it appears in the answer
+    t = t.replace(/سورة/g, '');
+
+    // 3. Standardize Alifs and common letters (Hamzas, Taa Marbuta)
+    const mapping = { 
+        'أ': 'ا', 'إ': 'ا', 'آ': 'ا', 
+        'ى': 'ي', 'ئ': 'ي', 'ؤ': 'و', 
+        'ة': 'ه' 
+    };
     t = t.replace(/[أإآىئؤة]/g, match => mapping[match]);
-    t = t.replace(/[^ء-ي0-9\s]/g, '');
-    return t.replace(/\s+/g, ' ').trim();
+
+    // 4. THE FIX: Remove all spaces completely for comparison
+    // This solves the "الحمد لله" vs "الحمدلله" issue!
+    t = t.replace(/\s+/g, '');
+
+    // 5. Remove anything that isn't a basic Arabic letter or number
+    t = t.replace(/[^ء-ي0-9]/g, '');
+
+    return t.trim();
 }
 
 async function fetchQuranData() {
@@ -181,7 +198,7 @@ function checkAnswers() {
         let isCorrect = false;
 
         if (isAyah) {
-            isCorrect = canCorrect.includes(canUser) && canUser.length > 5;
+            isCorrect = (canCorrect.includes(canUser) || canUser.includes(canCorrect)) && canUser.length > 3;
             if (userInput.trim() === "") isCorrect = false;
         } else {
             isCorrect = (canUser === canCorrect);
@@ -218,6 +235,19 @@ function checkAnswers() {
     document.getElementById('results').innerHTML = resultsHTML;
     document.getElementById('submit-btn').style.display = 'none';
     document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const themeBtn = document.getElementById('theme-toggle');
+    
+    if (body.getAttribute('data-theme') === 'light') {
+        body.removeAttribute('data-theme');
+        themeBtn.innerText = '🌙';
+    } else {
+        body.setAttribute('data-theme', 'light');
+        themeBtn.innerText = '☀️';
+    }
 }
 
 fetchQuranData();
