@@ -1,6 +1,8 @@
 let quranData = [];
 let currentAnswers = {};
 let currentMode = 'random'; // Can be 'random', 'page', or 'surah'
+let currentAudioSurah = 1;
+let currentAudioAyah = 1;
 
 function canonicalize(text) {
     if (!text) return "";
@@ -158,6 +160,18 @@ function generateQuestion() {
 
     document.getElementById('ayah-text').innerText = `✨ ${verseText} ✨`;
 
+    // Update trackers for the audio player (Arrays are 0-indexed, so we add 1)
+    currentAudioSurah = s_idx + 1; 
+    currentAudioAyah = v_idx + 1;
+
+    // Stop any currently playing audio when a new question generates
+    const audioEl = document.getElementById('ayah-audio');
+    if (audioEl) {
+        audioEl.pause();
+        audioEl.currentTime = 0;
+        document.getElementById('play-btn').innerText = '▶️ تشغيل';
+    }
+
     // EDGE CASE LOGIC (Checking if we are at the beginning/end)
     const isFirstSurah = (s_idx === 0); // Al-Fatihah
     const isLastSurah = (s_idx === quranData.length - 1); // An-Nas
@@ -248,6 +262,43 @@ function toggleTheme() {
         body.setAttribute('data-theme', 'light');
         themeBtn.innerText = '☀️';
     }
+}
+
+// Helper function to turn "1" into "001" for the URL
+function padNumber(num) {
+    return num.toString().padStart(3, '0');
+}
+
+// Logic to fetch and play the audio
+function playAyahAudio() {
+    const sheikhFolder = document.getElementById('sheikh-select').value;
+    const audioEl = document.getElementById('ayah-audio');
+    const playBtn = document.getElementById('play-btn');
+
+    // If it is already playing, pause it
+    if (!audioEl.paused) {
+        audioEl.pause();
+        playBtn.innerText = '▶️ تشغيل';
+        return;
+    }
+
+    // Construct the 6-digit file name (e.g., 001001.mp3)
+    const surahStr = padNumber(currentAudioSurah);
+    const ayahStr = padNumber(currentAudioAyah);
+    const audioUrl = `https://everyayah.com/data/${sheikhFolder}/${surahStr}${ayahStr}.mp3`;
+
+    // Change source only if it's a new Ayah or new Sheikh
+    if (audioEl.src !== audioUrl) {
+        audioEl.src = audioUrl;
+    }
+
+    audioEl.play();
+    playBtn.innerText = '⏸️ إيقاف';
+
+    // When the audio finishes, reset the button text
+    audioEl.onended = function() {
+        playBtn.innerText = '▶️ تشغيل';
+    };
 }
 
 fetchQuranData();
