@@ -59,6 +59,9 @@ body {
 
 /* Theme Toggle Button */
 #theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 15px;
     right: 15px;
@@ -186,13 +189,16 @@ button:hover {
 }
 
 #refresh-ayah-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 10px;
     left: 10px;
     background-color: var(--tab-inactive-bg);
     color: var(--text-color);
     border: 1px solid var(--input-border);
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 50%;
     margin: 0;
     font-size: 16px;
@@ -238,8 +244,11 @@ button:hover {
 }
 
 .audio-controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 0;
-    padding: 8px 15px;
+    padding: 10px;
     font-size: 14px;
     display: flex;
     align-items: center;
