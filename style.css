@@ -8,33 +8,33 @@
 /* Color Palette Variables */
 :root {
     /* Dark Mode (Default) */
-    --bg-color: #1a1a1b;
-    --container-bg: #2d2d2e;
-    --text-color: #e2e2e2;
-    --input-bg: #3e3e3f;
-    --input-border: #555;
-    --tab-inactive-bg: #3e3e3f;
-    --tab-text: #bbb;
+    --bg-color: #1a1c1a;
+    --container-bg: #2d2f2d;
+    --text-color: #e2e5e2;
+    --input-bg: #3e403e;
+    --input-border: #555855;
+    --tab-inactive-bg: #3e403e;
+    --tab-text: #bbbebb;
     --accent-color: oklch(0.55 0.2114 138);
     --correct-color: #45d07a;
     --incorrect-color: #ff5e5e;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --shadow: 0 4px 15px rgba(0, 32, 0, 0.5);
 }
 
 [data-theme="light"] {
     /* Light Mode */
-    --bg-color: #f4f7f6;
+    --bg-color: #f4f9f6;
     --container-bg: #ffffff;
-    --refresh-hover-bg: #d6dbe0;
-    --text-color: #333;
-    --input-bg: #ffffff;
-    --input-border: #ccc;
-    --tab-inactive-bg: #eef5f9;
-    --tab-text: #555;
-    --accent-color: #2c3e50;
+    --refresh-hover-bg: #d6e0db;
+    --text-color: #333f33;
+    --input-bg: #fcfffc;
+    --input-border: #cccfcc;
+    --tab-inactive-bg: #eef9f5;
+    --tab-text: #555f55;
+    --accent-color: oklch(0.45 0.2114 138);
     --correct-color: #27ae60;
     --incorrect-color: #c0392b;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow: 0 4px 15px rgba(0, 32, 0, 0.1);
 }
 
 body {
