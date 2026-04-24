@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap");
+
 @font-face {
     font-family: "Kitab";
     src: url("fonts/kitab.ttf");
@@ -36,7 +38,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "IBM Plex Sans Arabic", sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
@@ -100,7 +102,7 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 /* Input & Textarea styling */
@@ -125,6 +127,7 @@ textarea {
 }
 
 button {
+    font-family: inherit;
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -157,7 +160,6 @@ button:hover {
     margin-top: 0; /* Important */
     border-radius: 0 !important; /* Forces it to fill the square space */
     padding: 12px;
-    font-weight: bold;
     border: none;
     border-left: 1px solid var(--input-border);
 }
